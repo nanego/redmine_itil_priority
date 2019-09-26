@@ -20,7 +20,7 @@ end
 require_dependency 'redmine_itil_priority'
 
 # Patch of core classes
-ActionDispatch::Callbacks.to_prepare do
+ActiveSupport::Reloader.to_prepare do
   require_dependency 'redmine_itil_priority/issue_patch'
 end
 
