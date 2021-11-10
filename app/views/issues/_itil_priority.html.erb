@@ -33,7 +33,6 @@
 $(function() {
   function recalculateItilPriority(impact, urgency) {
     var priority_id = $("#priority_i"+impact+"_u"+urgency).html() 
-    alert(priority_id);
     var $select = $("#issue_priority_id")
     $select.val(priority_id)
     $("#real-priority-display").html($select.find("option:selected").html())
