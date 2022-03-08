@@ -9,7 +9,7 @@ class Issue
       if @settings.nil?
         @settings = Setting['plugin_redmine_itil_priority']
       end
-      write_attribute(:priority_id, @settings["priority_i" + self.impact_id.to_s + "_u" + pid])
+      write_attribute(:priority_id, @settings["priority_i" + self.impact_id.to_s + "_u" + pid.to_s])
     end
     write_attribute(:urgency_id, pid)
   end
@@ -19,7 +19,7 @@ class Issue
       if @settings.nil?
         @settings = Setting['plugin_redmine_itil_priority']
       end
-      write_attribute(:priority_id, @settings["priority_i" + pid + "_u" + self.urgency_id.to_s])
+      write_attribute(:priority_id, @settings["priority_i" + pid.to_s + "_u" + self.urgency_id.to_s])
     end
     write_attribute(:impact_id, pid)
   end
