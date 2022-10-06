@@ -6,19 +6,29 @@ class Issue
 
   def urgency_id=(pid)
     unless self.impact_id.nil?
-      if @settings.nil?
-        @settings = Setting['plugin_redmine_itil_priority']
-      end
+      @settings = Setting['plugin_redmine_itil_priority'] if @settings.nil?
       write_attribute(:priority_id, @settings["priority_i" + self.impact_id.to_s + "_u" + pid.to_s])
     end
     write_attribute(:urgency_id, pid)
   end
 
+  def priority_id=(pid)
+    self.priority = nil
+    write_attribute(:priority_id, pid)
+    @settings = Setting['plugin_redmine_itil_priority'] if @settings.nil?
+    for i in 1..3 do
+      for u in 1..3 do
+        if pid == @settings["priority_i" + i.to_s + "_u" + u.to_s]
+          write_attribute(:urgency_id, u)
+          write_attribute(:impact_id, i)
+        end
+      end
+    end
+  end
+
   def impact_id=(pid)
     unless self.urgency_id.nil?
-      if @settings.nil?
-        @settings = Setting['plugin_redmine_itil_priority']
-      end
+      @settings = Setting['plugin_redmine_itil_priority'] if @settings.nil?
       write_attribute(:priority_id, @settings["priority_i" + pid.to_s + "_u" + self.urgency_id.to_s])
     end
     write_attribute(:impact_id, pid)
