@@ -16,11 +16,16 @@ class Issue
     self.priority = nil
     write_attribute(:priority_id, pid)
     @settings = Setting['plugin_redmine_itil_priority'] if @settings.nil?
-    for i in 1..3 do
-      for u in 1..3 do
-        if pid == @settings["priority_i" + i.to_s + "_u" + u.to_s]
-          write_attribute(:urgency_id, u)
-          write_attribute(:impact_id, i)
+    unless self.impact_id.nil? || self.urgency_id.nil?
+      priority = @settings["priority_i" + self.impact_id.to_s + "_u" + self.urgency_id.to_s]
+    end
+    if priority.nil? || pid != priority
+      for i in 1..3 do
+        for u in 1..3 do
+          if pid == @settings["priority_i" + i.to_s + "_u" + u.to_s]
+            write_attribute(:urgency_id, u)
+            write_attribute(:impact_id, i)
+          end
         end
       end
     end
