@@ -6,19 +6,6 @@
   .real-priority { box-sizing:border-box; width:100%; position:absolute; top:0; left:230px; height:100%; padding-top:1.4em; }
   .real-priority > .priority { position:absolute; top:1.4em; left:25px; font-size:110%; }
 </style>
-<script>
-$(function() {
-  function recalculateItilPriority(impact, urgency) {
-    var priority_id = $("#priority_i"+impact+"_u"+urgency).html() 
-    var $select = $("#issue_priority_id")
-    $select.val(priority_id)
-    $("#real-priority-display").html($select.find("option:selected").html())
-  }
-  $("#issue_urgency_id, #issue_impact_id").on("change", function() {
-    recalculateItilPriority($("#issue_impact_id").val(), $("#issue_urgency_id").val())
-  })
-})
-</script>
 <% (1..3).each do |i| %>
   <% (1..3).each do |u| %>
     <% key = "priority_i#{i}_u#{u}" %>
@@ -42,3 +29,17 @@ $(function() {
     </span>
   </span>
 </span>
+<script>
+$(function() {
+  function recalculateItilPriority(impact, urgency) {
+    var priority_id = $("#priority_i"+impact+"_u"+urgency).html() 
+    var $select = $("#issue_priority_id")
+    $select.val(priority_id)
+    $("#real-priority-display").html($select.find("option:selected").html())
+  }
+  $("#issue_urgency_id, #issue_impact_id").on("change", function() {
+    recalculateItilPriority($("#issue_impact_id").val(), $("#issue_urgency_id").val())
+  })
+  recalculateItilPriority($("#issue_impact_id").val(), $("#issue_urgency_id").val())
+})
+</script>

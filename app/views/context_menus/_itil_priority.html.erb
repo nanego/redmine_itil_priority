@@ -1,0 +1,25 @@
+  <% if @safe_attributes.include?('priority_id') && @priorities.present? -%>
+  <li class="folder">
+    <a href="#" class="submenu"><%= l(:field_urgency) %></a>
+    <ul>
+    <% RedmineItilPriority.urgency_options.each do |i| -%>
+      <li><%= context_menu_link i[0], bulk_update_issues_path(:ids => @issue_ids, :issue => {'urgency_id' => i[1]}, :back_url => @back), :method => :post,
+                                  :selected => (@issue && i[1] == @issue.urgency_id), :disabled => (!@can[:edit] || @issues.any?(&:priority_derived?)) %></li>
+    <% end -%>
+    </ul>
+  </li>
+  <% end %>
+
+  <% if @safe_attributes.include?('priority_id') && @priorities.present? -%>
+  <li class="folder">
+    <a href="#" class="submenu"><%= l(:field_impact) %></a>
+    <ul>
+    <% RedmineItilPriority.impact_options.each do |i| -%>
+      <li><%= context_menu_link i[0], bulk_update_issues_path(:ids => @issue_ids, :issue => {'impact_id' => i[1]}, :back_url => @back), :method => :post,
+                                  :selected => (@issue && i[1] == @issue.impact_id), :disabled => (!@can[:edit] || @issues.any?(&:priority_derived?)) %></li>
+    <% end -%>
+    </ul>
+  </li>
+  <% end %>
+
+  <% if false -%>

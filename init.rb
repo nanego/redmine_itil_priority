@@ -17,12 +17,11 @@ Redmine::Plugin.register :redmine_itil_priority do
 end
 
 # Extra classes
-require_dependency 'redmine_itil_priority'
-
-# Patch of core classes
-ActiveSupport::Reloader.to_prepare do
-  require_dependency 'redmine_itil_priority/issue_patch'
+if Rails.configuration.respond_to?(:autoloader) && Rails.configuration.autoloader == :zeitwerk
+  Rails.autoloaders.each { |loader| loader.ignore(File.dirname(__FILE__) + '/lib') }
 end
+
+require File.dirname(__FILE__) + '/lib/redmine_itil_priority'
 
 # Little hack for using the "deface" gem in redmine:
 # - redmine plugins are not railties nor engines, so deface overrides in app/overrides/ are not detected automatically
